@@ -42,7 +42,7 @@
     var slider = document.getElementById('slider');
     
     noUiSlider.create(slider, {
-        start: min,
+        start: max,
         tooltips: {
             to: function(value) {
                 return moment.unix(value).calendar();
