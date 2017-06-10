@@ -2,6 +2,9 @@
 
 {block title}Data Points &mdash; {$dwoo.parent}{/block}
 
+{block user-tools}{/block}
+{block header-bottom}{/block}
+
 {block js-top}
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.css' rel='stylesheet' />
     {cssmin "nouislider.css"}
