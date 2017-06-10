@@ -65,9 +65,9 @@
                 <td>
                     <dl>
                         <dt>Relative Humidity</dt>
-                        <dd>{$DataPoint->Payload|substr:0:2} &rarr; {$DataPoint->Payload|substr:0:2|hexdec}</dd>
-                        <dt>Temperature</dt>
                         <dd>{$DataPoint->Payload|substr:6:2} &rarr; {$DataPoint->Payload|substr:6:2|hexdec}</dd>
+                        <dt>Temperature</dt>
+                        <dd>{$DataPoint->Payload|substr:12:2} &rarr; {$DataPoint->Payload|substr:12:2|hexdec}</dd>
                     </dl>
                 </td>
             </tr>
