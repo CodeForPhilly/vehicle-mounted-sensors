@@ -5,9 +5,10 @@
 {block user-tools}{/block}
 {block header-bottom}{/block}
 
-{block js-top}
+{block css}
+    {$dwoo.parent}
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.css' rel='stylesheet' />
-    {cssmin "nouislider.css"}
+    {cssmin "nouislider.css+data-map.css"}
 {/block}
 
 {block js-bottom}
@@ -31,10 +32,12 @@
             <tr>
                 <th>Timestamp</th>
                 <th>Device Address</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
+                <th>Device Location</th>
+                <th>Receiver Location</th>
                 <th>Raw Payload</th>
-                <th>Decoded</th>
+                <th>Temperature</th>
+                <th>Relative Humidity</th>
+                <th>Particle Concentration</th>
             </tr>
         </thead>
 
@@ -43,17 +46,12 @@
             <tr>
                 <td>{$DataPoint->Created|date_format:'%Y-%m-%d %H:%M:%S'}</td>
                 <td>{$DataPoint->DeviceAddress}</td>
-                <td>{$DataPoint->Latitude}</td>
-                <td>{$DataPoint->Longitude}</td>
+                <td>{$DataPoint->DeviceLatitude},<br> {$DataPoint->DeviceLongitude}</td>
+                <td>{$DataPoint->ReceiverLatitude},<br> {$DataPoint->ReceiverLongitude}</td>
                 <td><code>{$DataPoint->Payload}</code></td>
-                <td>
-                    <dl>
-                        <dt>Relative Humidity</dt>
-                        <dd>{$DataPoint->Payload|substr:6:2} &rarr; {$DataPoint->Payload|substr:6:2|hexdec}</dd>
-                        <dt>Temperature</dt>
-                        <dd>{$DataPoint->Payload|substr:12:2} &rarr; {$DataPoint->Payload|substr:12:2|hexdec}</dd>
-                    </dl>
-                </td>
+                <td>{$DataPoint->Temperature}</td>
+                <td>{$DataPoint->Humidity}</td>
+                <td>{$DataPoint->Concentration}</td>
             </tr>
         {/foreach}
         </tbody>

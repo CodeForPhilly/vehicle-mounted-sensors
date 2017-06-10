@@ -8,22 +8,26 @@
     // global state
     var sensorDataLength = sensorData.length,
         timestamps = [], timestampMin, timestampMax, timestampDelta, timestampsLength,
-        map, slider;
+        timestampsMap = {},
+        map, slider, marker, popup;
 
 
     // initialize application
     _analyzeData();
     _setupMap();
     _setupSlider();
+    _showMarker(timestampsMap[timestampMax]);
 
 
     // function library
     function _analyzeData() {
-        var i = 0, datum;
+        var i = 0, datum, timestamp;
     
         for (; i < sensorDataLength; i++) {
             datum = sensorData[i];
-            timestamps.push(datum.Created);
+            timestamp = datum.Created;
+            timestamps.push(timestamp);
+            timestampsMap[timestamp] = datum; // WARNING: this will drop any previous value at the same timestamp, not suitable for multiple vehicles
         }
 
         timestamps = timestamps.sort();
@@ -38,7 +42,8 @@
 
 
     function _setupMap() {
-        // setup map
+        var markerEl;
+
         mapboxgl.accessToken = 'pk.eyJ1IjoidGhlbWlnaHR5Y2hyaXMiLCJhIjoiY2ozcmk4dnJ3MDAzbDJ3cjd1dGpkNXUxZSJ9.hb2cLAYkXJqdFrdzoydIpA';
 
         map = new mapboxgl.Map({
@@ -55,6 +60,13 @@
         });
 
         console.info('map initialized:', map);
+
+        popup = new mapboxgl.Popup({offset: 25});
+        popup.setText('This is a marker with some data');
+
+        markerEl = document.createElement('div');
+        markerEl.className = 'marker-bus';
+        marker = new mapboxgl.Marker(markerEl, {offset: [-27.5, -62]});
     }
 
 
@@ -104,5 +116,21 @@
         slider.noUiSlider.on('update', function(values) {
             console.log('slider update', values);
         });
+    }
+
+
+    function _showMarker(datum) {
+        marker.setLngLat([datum.ReceiverLongitude, datum.ReceiverLatitude]); // TODO: use device location
+        marker.setPopup(popup);
+        marker.addTo(map);
+
+        popup.setHTML([
+            '<dl>',
+                '<dt>Sample Time</dt><dd>'+moment.unix(datum.Created).format('lll')+'</dd>',
+                '<dt>Temperature</dt><dd>'+datum.Temperature+'</dd>',
+                '<dt>Relative Humidity</dt><dd>'+datum.Humidity+'</dd>',
+                '<dt>Particle Concentration</dt><dd>'+datum.Concentration+'</dd>',
+            '</dl>'
+        ].join(''));
     }
 })();
