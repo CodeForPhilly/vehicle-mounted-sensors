@@ -25,7 +25,7 @@
     </header>
 
     <div id='slider' style='margin-bottom: 50px; margin-top: 60px'></div>
-    <div id='map' style='height: 300px;'></div>
+    <div id='map' style='height: 500px;'></div>
 
     <table class="row-stripes cell-borders">
         <thead>

@@ -61,7 +61,7 @@
 
         console.info('map initialized:', map);
 
-        popup = new mapboxgl.Popup({offset: 25});
+        popup = new mapboxgl.Popup({offset: 5, anchor: 'top'});
         popup.setText('This is a marker with some data');
 
         markerEl = document.createElement('div');
