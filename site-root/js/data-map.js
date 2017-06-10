@@ -9,6 +9,7 @@
     var sensorDataLength = sensorData.length,
         timestamps = [], timestampMin, timestampMax, timestampDelta, timestampsLength,
         timestampsMap = {},
+        markerInitialized = false,
         map, slider, marker, popup;
 
 
@@ -16,7 +17,6 @@
     _analyzeData();
     _setupMap();
     _setupSlider();
-    _showMarker(timestampsMap[timestampMax]);
 
 
     // function library
@@ -115,14 +115,24 @@
 
         slider.noUiSlider.on('update', function(values) {
             console.log('slider update', values);
+            _loadDatum(timestampsMap[parseInt(values[0])]);
         });
     }
 
 
-    function _showMarker(datum) {
+    function _loadDatum(datum) {
+        if (!datum) {
+            popup.setText('No data available');
+            returne;
+        }
+
         marker.setLngLat([datum.ReceiverLongitude, datum.ReceiverLatitude]); // TODO: use device location
-        marker.setPopup(popup);
-        marker.addTo(map);
+        
+        if (!markerInitialized) {
+            marker.setPopup(popup);
+            marker.addTo(map);
+            markerInitialized = true;
+        }
 
         popup.setHTML([
             '<dl>',
