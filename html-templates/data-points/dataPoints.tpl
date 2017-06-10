@@ -13,23 +13,7 @@
 {block js-bottom}
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.js'></script>
     <script>
-        var sensorData = <?php
-            $timestamps = [];
-
-            foreach ($this->scope['data'] AS $DataPoint) {
-                if (!in_array($DataPoint->Created, $timestamps)) {
-                    $timestamps[] = $DataPoint->Created;
-                }
-            }
-
-            sort($timestamps);
-
-            echo json_encode([
-                'timestampsMin' => min($timestamps),
-                'timestampsMax' => max($timestamps),
-                'timestamps' => $timestamps
-            ]);
-        ?>;
+        var sensorData = {JSON::translateObjects($data)|json_encode};
     </script>
     {jsmin "moment.js+wnumb.js+nouislider.js+data-map.js"}
 {/block}
