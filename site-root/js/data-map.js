@@ -16,7 +16,6 @@
         minZoom: 12,
         pitch: 60,
         attributionControl: true,
-        hash: true,
         touchRotate: false
     });
     
