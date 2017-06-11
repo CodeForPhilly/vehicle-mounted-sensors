@@ -31,10 +31,10 @@
         <thead>
             <tr>
                 <th>Timestamp</th>
-                <th>Device Address</th>
-                <th>Device Location</th>
                 <th>Receiver Location</th>
+                <th>Device Address</th>
                 <th>Raw Payload</th>
+                <th>Device Location</th>
                 <th>Temperature</th>
                 <th>Relative Humidity</th>
                 <th>Particle Concentration</th>
@@ -45,10 +45,10 @@
         {foreach item=DataPoint from=$data}
             <tr>
                 <td>{$DataPoint->Created|date_format:'%Y-%m-%d %H:%M:%S'}</td>
-                <td>{$DataPoint->DeviceAddress}</td>
-                <td>{$DataPoint->DeviceLatitude},<br> {$DataPoint->DeviceLongitude}</td>
                 <td>{$DataPoint->ReceiverLatitude},<br> {$DataPoint->ReceiverLongitude}</td>
+                <td>{$DataPoint->DeviceAddress}</td>
                 <td><code>{$DataPoint->Payload}</code></td>
+                <td>{$DataPoint->DeviceLatitude},<br> {$DataPoint->DeviceLongitude}</td>
                 <td>{$DataPoint->Temperature}</td>
                 <td>{$DataPoint->Humidity}</td>
                 <td>{$DataPoint->Concentration}</td>
